@@ -15,7 +15,7 @@
 {
     if (self = [super init])
     {
-        CFUUIDRef u = CFUUIDCreateFromString(NULL, (CFStringRef) uuidStr);
+        CFUUIDRef u = CFUUIDCreateFromString(NULL, (__bridge CFStringRef) uuidStr);
         bytes = CFUUIDGetUUIDBytes(u);
         CFRelease(u);
     }
@@ -42,13 +42,12 @@
 
 - (id) initWithData: (NSData *) data
 {
-    if (self = [super init])
+    if ([data length] < 16)
     {
-        if ([data length] < 16)
-        {
-            [self release];
-            return nil;
-        }
+      return nil;
+    }
+    else if (self = [super init])
+    {
         [data getBytes: &bytes length: sizeof(bytes)];
     }
     return self;
@@ -56,22 +55,22 @@
 
 + (NSUUID *) uuidWithString: (NSString *) uuidStr
 {
-    return [[[NSUUID alloc] initWithString: uuidStr] autorelease];
+    return [[NSUUID alloc] initWithString: uuidStr];
 }
 
 + (NSUUID *) uuidWithUUIDRef: (CFUUIDRef) uuid
 {
-    return [[[NSUUID alloc] initWithUUIDRef: uuid] autorelease];
+    return [[NSUUID alloc] initWithUUIDRef: uuid];
 }
 
 + (NSUUID *) uuidWithUUIDBytes: (CFUUIDBytes) uuidBytes
 {
-    return [[[NSUUID alloc] initWithUUIDBytes: uuidBytes] autorelease];
+    return [[NSUUID alloc] initWithUUIDBytes: uuidBytes];
 }
 
 + (NSUUID *) uuidWithData: (NSData *) data
 {
-    return [[[NSUUID alloc] initWithData: data] autorelease];
+    return [[NSUUID alloc] initWithData: data];
 }
 
 + (NSUUID *) randomUuid
