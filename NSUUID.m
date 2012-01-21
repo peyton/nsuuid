@@ -8,7 +8,6 @@
 
 #import "NSUUID.h"
 
-
 @implementation NSUUID
 
 - (id) initWithString: (NSString *) uuidStr
@@ -53,6 +52,24 @@
     return self;
 }
 
+- (void) encodeWithCoder:(NSCoder *)coder
+{
+    [coder encodeBytes:(void *) &bytes length: sizeof(bytes)];
+}
+
+- (id)initWithCoder:(NSCoder *)coder
+{
+    if (self = [super init]) {
+      NSUInteger length;
+      void *decodedBytes = [coder decodeBytesWithReturnedLength:&length];
+      NSAssert(length == sizeof(bytes), 
+               @"Got a non-uuid size back when decoding: %d != %d", length, sizeof(bytes));
+      memcpy(&bytes, decodedBytes, sizeof(bytes));
+    }
+    return self;
+}
+
+
 + (NSUUID *) uuidWithString: (NSString *) uuidStr
 {
     return [[NSUUID alloc] initWithString: uuidStr];
@@ -75,9 +92,7 @@
 
 + (NSUUID *) randomUuid
 {
-    CFUUIDBytes bytes;
-    SecRandomCopyBytes(kSecRandomDefault, sizeof(bytes), (UInt8 *) &bytes);
-    return [NSUUID uuidWithUUIDBytes: bytes];
+    return [NSUUID uuidWithUUIDRef: CFUUIDCreate(NULL)];
 }
 
 + (NSUUID *) nullUuid

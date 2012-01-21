@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface NSUUID : NSObject
+@interface NSUUID : NSObject<NSCoding>
 {
     CFUUIDBytes bytes;
 }
