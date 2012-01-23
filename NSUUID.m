@@ -133,6 +133,31 @@
     return memcmp(&bytes, &thatbytes, sizeof(bytes)) == 0;
 }
 
+- (NSUInteger) hash
+{
+    long long mostSigBits = 
+        ((long long)bytes.byte15 << 56) |
+        ((long long)bytes.byte14 << 48) |
+        ((long long)bytes.byte13 << 40) |
+        ((long long)bytes.byte12 << 32) |
+        ((long long)bytes.byte11 << 24) |
+        ((long long)bytes.byte10 << 16) |
+        ((long long)bytes.byte9 << 8) |
+        ((long long)bytes.byte8 << 0);
+    long long leastSigBits = 
+        ((long long)bytes.byte7 << 56) |
+        ((long long)bytes.byte6 << 48) |
+        ((long long)bytes.byte5 << 40) |
+        ((long long)bytes.byte4 << 32) |
+        ((long long)bytes.byte3 << 24) |
+        ((long long)bytes.byte2 << 16) |
+        ((long long)bytes.byte1 << 8) |
+        ((long long)bytes.byte0 << 0);
+    
+    long long hilo = mostSigBits ^ leastSigBits;
+    return ((NSUInteger)(hilo >> 32)) ^ (NSUInteger) hilo;
+}
+
 - (NSString *) description
 {
     return [self stringValue];
@@ -176,6 +201,13 @@
             && bytes.byte13 == 0
             && bytes.byte14 == 0
             && bytes.byte15 == 0);
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    return [[NSUUID allocWithZone:zone] initWithUUIDBytes:bytes];
 }
 
 @end
