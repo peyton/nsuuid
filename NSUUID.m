@@ -166,14 +166,6 @@
     return [self stringValue];
 }
 
-- (CFUUIDRef) uuid
-{
-    return CFUUIDCreateWithBytes(NULL, bytes.byte0, bytes.byte1, bytes.byte2, bytes.byte3,
-                                 bytes.byte4, bytes.byte5, bytes.byte6, bytes.byte7,
-                                 bytes.byte8, bytes.byte9, bytes.byte10, bytes.byte11,
-                                 bytes.byte12, bytes.byte13, bytes.byte14, bytes.byte15);
-}
-
 - (CFUUIDBytes) bytes
 {
     CFUUIDBytes ret = bytes;
@@ -214,3 +206,12 @@
 }
 
 @end
+
+CFUUIDRef CFUUIDCreateFromNSUUID(NSUUID *uuid)
+{
+    CFUUIDBytes bytes = uuid.bytes;
+    return CFUUIDCreateWithBytes(NULL, bytes.byte0, bytes.byte1, bytes.byte2, bytes.byte3,
+                                 bytes.byte4, bytes.byte5, bytes.byte6, bytes.byte7,
+                                 bytes.byte8, bytes.byte9, bytes.byte10, bytes.byte11,
+                                 bytes.byte12, bytes.byte13, bytes.byte14, bytes.byte15);
+}

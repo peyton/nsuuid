@@ -27,9 +27,10 @@
 + (NSUUID *) nullUuid;
 
 - (NSString *) stringValue;
-- (CFUUIDRef) uuid;
 - (CFUUIDBytes) bytes;
 - (NSData *) data;
 - (BOOL) isNullUuid;
 
 @end
+
+CFUUIDRef CFUUIDCreateFromNSUUID(NSUUID *uuid);
