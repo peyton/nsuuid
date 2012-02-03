@@ -92,7 +92,10 @@
 
 + (NSUUID *) randomUuid
 {
-    return [NSUUID uuidWithUUIDRef: CFUUIDCreate(NULL)];
+    CFUUIDRef cfuuid = CFUUIDCreate(NULL);
+    NSUUID *uuid = [NSUUID uuidWithUUIDRef: cfuuid];
+    CFRelease(cfuuid);
+    return uuid;
 }
 
 + (NSUUID *) nullUuid
