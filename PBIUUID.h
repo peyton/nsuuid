@@ -1,5 +1,5 @@
 //
-//  NSUUID.h
+//  PBIUUID.h
 //  WODCoach
 //
 //  Created by Casey Marshall on 6/14/10.
@@ -8,10 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-
-@interface NSUUID : NSObject<NSCoding, NSCopying>
+@interface PBIUUID : NSObject<NSCoding, NSCopying>
 {
-    CFUUIDBytes bytes;
+    CFUUIDBytes _bytes;
 }
 
 - (id) initWithString: (NSString *) uuidStr;
@@ -19,12 +18,12 @@
 - (id) initWithUUIDBytes: (CFUUIDBytes) uuidBytes;
 - (id) initWithData: (NSData *) data;
 
-+ (NSUUID *) uuidWithString: (NSString *) uuidStr;
-+ (NSUUID *) uuidWithUUIDRef: (CFUUIDRef) uuid;
-+ (NSUUID *) uuidWithUUIDBytes: (CFUUIDBytes) uuidBytes;
-+ (NSUUID *) uuidWithData: (NSData *) data;
-+ (NSUUID *) randomUuid;
-+ (NSUUID *) nullUuid;
++ (id) uuidWithString: (NSString *) uuidStr;
++ (id) uuidWithUUIDRef: (CFUUIDRef) uuid;
++ (id) uuidWithUUIDBytes: (CFUUIDBytes) uuidBytes;
++ (id) uuidWithData: (NSData *) data;
++ (id) randomUuid;
++ (id) nullUuid;
 
 - (NSString *) stringValue;
 - (CFUUIDBytes) bytes;
@@ -33,4 +32,4 @@
 
 @end
 
-CFUUIDRef CFUUIDCreateFromNSUUID(NSUUID *uuid);
+CFUUIDRef CFUUIDCreateFromNSUUID(PBIUUID *uuid);
