@@ -93,7 +93,7 @@
 + (id) randomUuid
 {
     CFUUIDRef cfuuid = CFUUIDCreate(NULL);
-    NSUUID *uuid = [[self class] uuidWithUUIDRef: cfuuid];
+    PBIUUID *uuid = [[self class] uuidWithUUIDRef: cfuuid];
     CFRelease(cfuuid);
     return uuid;
 }
